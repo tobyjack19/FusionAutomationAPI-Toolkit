@@ -1,0 +1,13 @@
+{
+  "fileName": "Example",
+  "projectName": "Simple Examples",
+  "text": "This is some different different text.",
+  "useCurrentDocument": false,
+  "saveAsNewDocument": false,
+  "hubId": "",
+  "fileURN": "<YOUR_FILE_URN_HERE>",
+  "parameters": {
+    "<YOUR_PARAMETER_NAME_1_HERE>": "39",
+    "<YOUR_PARAMETER_NAME_2_HERE>": "24"
+  }
+}

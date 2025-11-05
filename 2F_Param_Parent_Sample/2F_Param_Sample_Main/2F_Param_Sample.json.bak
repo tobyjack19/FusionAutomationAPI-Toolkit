@@ -1,0 +1,13 @@
+{
+  "fileName": "Example",
+  "projectName": "Simple Examples",
+  "text": "This is some different different text.",
+  "useCurrentDocument": false,
+  "saveAsNewDocument": false,
+  "hubId": "",
+  "fileURN": "<YOUR_URN>",
+  "parameters": {
+    "Set_Drive_Arm_Length": "38",
+    "Set_Finger_Tip_Length": "25"
+  }
+}

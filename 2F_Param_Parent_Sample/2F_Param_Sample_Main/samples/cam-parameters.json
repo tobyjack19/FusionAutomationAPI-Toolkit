@@ -1,0 +1,15 @@
+{
+  "useCurrentDocument": false,
+  "saveAsNewDocument": true,
+  "hubId": "",
+  "fileURN": "urn:adsk.wipprod:dm.lineage:ldPTKJvfSY-Mvp_Baqb1sw",
+  "parameters": {
+    "Setup1": {
+      "Adaptive1": {
+        "parameters": {
+          "bottomHeight_offset": "10.0"
+        }
+      }
+    }
+  }
+}
