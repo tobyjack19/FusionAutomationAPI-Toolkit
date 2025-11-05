@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Update parameters in 2F_Param_Edit.json and optionally run the TypeScript script.
+"""Update parameters in 2F_Param_Sample.json and optionally run the TypeScript script.
 
 Usage examples (PowerShell):
     python .\2F_Param.py -p ParamName=45            # set value and submit
@@ -8,7 +8,7 @@ Usage examples (PowerShell):
 
 Notes:
  - This will update the `parameters` object in the JSON file with the values provided.
- - By default the script will try to run `npx ts-node 2F_Param_Edit.ts` in the same folder.
+ - By default the script will try to run `npx ts-node 2F_Param_Sample.ts` in the same folder.
    That requires Node.js and `npx` to be available. To skip running the TypeScript file use --no-run.
  - If you intend to run the script remotely via an Automation API, skip the local run and use
    your remote deployment/trigger mechanism (this script only updates the JSON file and can
@@ -54,7 +54,7 @@ except Exception:
 # when no --value CLI argument is provided.
 
 # You can edit this dictionary to control which top-level fields are set in the
-# `2F_Param_Edit.json` file before submitting the workitem. Keys are top-level
+# `2F_Param_Sample.json` file before submitting the workitem. Keys are top-level
 # JSON keys; the special key "parameters" controls the parameters object and
 # should be a dict of parameterName: value.
 # The script will clear the `parameters` element and replace it with only the
@@ -70,8 +70,6 @@ DEFAULT_UPDATES = {
     # Example: set fileURN if you want to override the default in the JSON
     "fileURN": "<YOUR_FILE_URN_HERE>"
 }
-
-#c:/Users/tajac/OneDrive - University of Bristol/PhD/Software/DefEnv/AutomationAPIScriptTS/2F_Param_Parent/2F_Param_Edit/node_modules/@adsk/fas/lib/index
 
 def load_json(path: Path) -> dict:
     with path.open("r", encoding="utf-8") as f:
@@ -140,14 +138,14 @@ def apply_updates(json_path: Path, parameter_updates: dict, other_updates: dict 
 
 
 def _load_task_parameters_from_main() -> dict:
-    """Load task parameters from ../2F_Param_Edit_Main/2F_Param_Edit.json (relative to this file).
+    """Load task parameters from ../2F_Param_Sample_Main/2F_Param_Sample.json (relative to this file).
 
     Returns parsed JSON dict or a sensible fallback on error.
     """
-    config_path = Path(__file__).resolve().parent / '2F_Param_Edit_Main' / '2F_Param_Edit.json'
+    config_path = Path(__file__).resolve().parent / '2F_Param_Sample_Main' / '2F_Param_Sample.json'
     # In case file layout is one level deeper, check parent.parent as fallback
     if not config_path.exists():
-        config_path = Path(__file__).resolve().parent.parent / '2F_Param_Edit_Main' / '2F_Param_Edit.json'
+        config_path = Path(__file__).resolve().parent.parent / '2F_Param_Sample_Main' / '2F_Param_Sample.json'
 
     try:
         with config_path.open('r', encoding='utf-8') as fh:
@@ -230,11 +228,11 @@ def run_typescript(folder: Path, ts_file: str) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Update parameters in the JSON and run the TS/workitem flow")
-    parser.add_argument("--file", default=None, help="Path to JSON file to edit (defaults to 2F_Param_Edit_Main/2F_Param_Edit.json)")
+    parser.add_argument("--file", default=None, help="Path to JSON file to edit (defaults to 2F_Param_Sample_Main/2F_Param_Sample.json)")
     parser.add_argument("--param", "-p", dest="params", action='append', help="Parameter update in the form NAME=VALUE. Can be passed multiple times.")
     parser.add_argument("--set", "-s", dest="sets", action='append', help="Top-level JSON update in the form KEY=VALUE (e.g. fileURN=urn:...). Can be passed multiple times.")
     parser.add_argument("--no-run", action="store_true", help="Only update JSON; do not run the TS file")
-    parser.add_argument("--ts-file", default="2F_Param_Edit.ts", help="TypeScript script to run (in same folder)")
+    parser.add_argument("--ts-file", default="2F_Param_Sample.ts", help="TypeScript script to run (in same folder)")
     args = parser.parse_args(argv)
 
     if args.file:
@@ -244,10 +242,10 @@ def main(argv: list[str] | None = None) -> int:
             base = Path(__file__).resolve().parent
             json_path = (base / json_path).resolve()
     else:
-        # Default: write into the 2F_Param_Edit_Main folder so CreateWorkItem reads it
-        default_main = Path(__file__).resolve().parent / '2F_Param_Edit_Main' / '2F_Param_Edit.json'
+        # Default: write into the 2F_Param_Sample_Main folder so CreateWorkItem reads it
+        default_main = Path(__file__).resolve().parent / '2F_Param_Sample_Main' / '2F_Param_Sample.json'
         if not default_main.exists():
-            default_main = Path(__file__).resolve().parent.parent / '2F_Param_Edit_Main' / '2F_Param_Edit.json'
+            default_main = Path(__file__).resolve().parent.parent / '2F_Param_Sample_Main' / '2F_Param_Sample.json'
         json_path = default_main
 
     # Build parameter updates and other updates from CLI and defaults
